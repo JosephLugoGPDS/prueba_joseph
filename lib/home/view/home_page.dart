@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:joseph_prueba/app/constants.dart';
+import 'package:joseph_prueba/app/router/router.dart';
 import 'package:joseph_prueba/app/utils/utils.dart';
 import 'package:joseph_prueba/home/cubit/posts_cubit.dart';
 import 'package:joseph_prueba/home/widgets/card_post.dart';
@@ -10,16 +11,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PostsCubit()..getPosts(1),
-      child: const HomeView(),
+    return Builder(
+      builder: (_) {
+        context.read<PostsCubit>().getPosts(1);
+        return const HomeView();
+      },
+      // create: (_) => PostsCubit()..,
+      
     );
   }
 }
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
-  static GlobalKey<ScaffoldState> loginViewKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +93,8 @@ class HomeView extends StatelessWidget {
                       ),
                 ),
               ),
-              BlocConsumer<PostsCubit, PostsState>(listener: (context, state) {
-                // TODO: implement listener
-              }, builder: (context, state) {
+              BlocBuilder<PostsCubit, PostsState>(
+              builder: (context, state) {
                 if (state is PostsLoadingState || state is PostsInitialState) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -101,9 +104,12 @@ class HomeView extends StatelessWidget {
                   child: ListView(
                     shrinkWrap: true,
                     children: List.generate(
-                      context.watch<PostsCubit>().posts.length,
+                      context.read<PostsCubit>().posts.length,
                       (index) => CardPost(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await Future.delayed(Duration.zero).then((_) => context.read<PostsCubit>().currentPost(context.read<PostsCubit>().posts[index]));
+                          await Navigator.pushNamed(context, Routes.post);
+                        },
                         post: context.watch<PostsCubit>().posts[index],
                       ),
                     ),

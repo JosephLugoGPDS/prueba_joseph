@@ -41,5 +41,11 @@ class PostsCubit extends Cubit<PostsState> {
       emit(const PostsInitialState());
     }
   }
+
+  void currentPost(PostModel postEven) {
+    post = postEven;
+    emit(CurrentPostState(currentPost: post!));
+  }
   List<PostModel> posts = <PostModel>[];
+  PostModel? post;
 }

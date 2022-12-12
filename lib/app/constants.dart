@@ -6,6 +6,7 @@ abstract class Constants {
   static const Color grayColor = Color(0xffEAEAEA);
   static const Color grayAccentColor = Color(0xffDCDCDC);
   static const Color cardColor = Color(0xffFCFCFC);
+  static const Color cardCommentColor = Color(0xffC4C4C4);
   static const Color blackColor = Color(0xff000000);
   static const Color textColor = Color(0xff434343);
   static const Color whiteColor = Color(0xffFFFFFF);

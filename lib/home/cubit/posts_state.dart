@@ -19,3 +19,9 @@ class PostLoadedState extends PostsState {
   });
   final List<PostModel> posts;
 }
+class CurrentPostState extends PostsState {
+  const CurrentPostState({
+    required this.currentPost,
+  });
+  final PostModel currentPost;
+}
