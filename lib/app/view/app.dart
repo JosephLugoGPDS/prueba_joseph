@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:joseph_prueba/app/router/router.dart';
 import 'package:joseph_prueba/l10n/l10n.dart';
 import 'package:joseph_prueba/login/view/login_page.dart';
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       routes: AppRoute.routes,
+      theme: ThemeData(
+        fontFamily: GoogleFonts.poppins().fontFamily,
+      ),
       home: const LoginPage(),
       supportedLocales: AppLocalizations.supportedLocales,
     );

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -23,8 +24,13 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load();
+
   await runZonedGuarded(
     () async {
+      // ignore: deprecated_member_use
       await BlocOverrides.runZoned(
         () async => runApp(await builder()),
         blocObserver: AppBlocObserver(),
